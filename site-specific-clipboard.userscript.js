@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Site specific clipboard
 // @namespace    http://tampermonkey.net/
-// @version      0.2.2
+// @version      0.2.3
 // @description  Read on https://github.com/albertdiones/site-specific-clipboard-userscript
 // @author       albertdiones@gmail.com
 // @match        http*://*/*
@@ -15,6 +15,7 @@
     'use strict';
 
     const contentKey = 'siteClipboard_content';
+    const statusKey = 'siteClipboard_windowIsMinimized'
 
 
     let body = document.body;
@@ -23,7 +24,7 @@
 
     styleSheet.innerHTML = ".ssc-wrapper {\
         text-align:right; position:fixed; top:0; right:0;background:#eee;height:450px;width:400px;z-index:9999999999999999; opacity:0.5; overflow:hidden; padding:2px;\
-    } .ssc-wrapper.minimized { width:160px; height: 25px;\
+    } .ssc-wrapper.minimized { width:160px; height: 18px;\
     } .ssc-wrapper.maximized .ssc-when-minimized { display: none\
     } .ssc-wrapper.minimized .ssc-when-maximized { display: none\
     } .ssc-wrapper .ssc-toggle-button { color:blue\
@@ -38,7 +39,12 @@
     let textAreaWrapper = document.createElement("div");
 
     textAreaWrapper.classList.add('ssc-wrapper');
-    textAreaWrapper.classList.add('maximized');
+
+    let previousContent = localStorage.getItem(contentKey);
+
+    let wasMinimized = localStorage.getItem(statusKey);
+
+    textAreaWrapper.classList.add(wasMinimized === true || !previousContent ? 'minimized' : 'maximized');
 
     // ssc = site specific clipboard
     textAreaWrapper.innerHTML = "<b>Site Clipboard<span class='ssc-when-maximized'>(" + GM_info.script.version + ")</span>\
@@ -49,7 +55,6 @@
 
 
     // set the content from the previous localStorage contents
-    let previousContent = localStorage.getItem(contentKey)
     if (previousContent !== null) {
         textArea.innerHTML = previousContent;
     }
@@ -79,6 +84,8 @@
     minimizeButton.addEventListener('click', function() {
         textAreaWrapper.classList.toggle('minimized');
         textAreaWrapper.classList.toggle('maximized');
+
+        localStorage.setItem(statusKey, textAreaWrapper.classList.contains('minimized'));
     })
 
     textAreaWrapper.addEventListener("mouseenter",function() {
