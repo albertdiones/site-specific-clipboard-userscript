@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Site specific clipboard
 // @namespace    http://tampermonkey.net/
-// @version      0.2.1
-// @description  A simple userscript that gives you a textarea you can write on that will persist when you go back to that website
+// @version      0.2.2
+// @description  Read on https://github.com/albertdiones/site-specific-clipboard-userscript
 // @author       albertdiones@gmail.com
 // @match        http*://*/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
