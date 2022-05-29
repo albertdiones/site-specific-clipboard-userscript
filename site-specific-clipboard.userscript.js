@@ -38,4 +38,14 @@
         localStorage.setItem(contentKey, textArea.value);
     }
     );
+
+    // block CTRL S  https://stackoverflow.com/questions/11000826/ctrls-preventdefault-in-chrome
+    textArea.addEventListener("keydown", function(e) {
+        // todo: change the e.which to e.key https://stackoverflow.com/questions/49278648/alternative-for-events-deprecated-keyboardevent-which-property
+        if(e.ctrlKey && (e.which == 83)) {
+            e.preventDefault();
+            return false;
+        }
+    }
+    );
 })();
