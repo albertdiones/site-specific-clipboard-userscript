@@ -6,6 +6,8 @@
 // @author       albert@addteam.org
 // @match        http*://*/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @updateUrl https://raw.githubusercontent.com/albertdiones/site-specific-clipboard-userscript/master/site-specific-clipboard.userscript.js
+// @downloadUrl https://raw.githubusercontent.com/albertdiones/site-specific-clipboard-userscript/master/site-specific-clipboard.userscript.js
 // @grant        none
 // ==/UserScript==
 
@@ -18,7 +20,7 @@
     let textAreaWrapper = document.createElement("div");
     textAreaWrapper.style = "position:fixed; top:0; right:0;background:#eee;height:450px;width:400px;z-index:9999999999999999; opacity:0.95;";
     textAreaWrapper.innerHTML = "<b>Site Clipboard</b><textarea></textarea>"
-    body.appendChild(textAreaWrapper);
+    body.appendChild(textAreaWrapper);updateURL
     let textArea = textAreaWrapper.querySelector("textarea");
 
 
