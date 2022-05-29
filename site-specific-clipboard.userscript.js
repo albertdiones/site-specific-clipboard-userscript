@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Site specific clipboard
 // @namespace    http://tampermonkey.net/
-// @version      0.1.4
+// @version      0.2.0
 // @description  A simple userscript that gives you a textarea you can write on that will persist when you go back to that website
 // @author       albert@addteam.org
 // @match        http*://*/*
@@ -16,15 +16,33 @@
 
     const contentKey = 'siteClipboard_content';
 
+
     let body = document.body;
+
+    let styleSheet = document.createElement('style');
+
+    styleSheet.innerHTML = ".ssc-wrapper {\
+        text-align:right; position:fixed; top:0; right:0;background:#eee;height:450px;width:400px;z-index:9999999999999999; opacity:0.5; overflow:hidden; padding:2px;\
+    } .ssc-wrapper.minimized { width:140px; height: 25px;\
+    } .ssc-wrapper.maximized .ssc-when-minimized { display: none \
+    } .ssc-wrapper.minimized .ssc-when-maximized { display: none\
+    } .ssc-wrapper .ssc-toggle-button { color:blue\
+    } .ssc-wrapper textarea { width:100%;height:95%; background: #ddd;\
+    } .ssc-wrapper.ssc-focused { opacity:1\
+    } \
+    ";
+
+    body.appendChild(styleSheet);
+
     let textAreaWrapper = document.createElement("div");
-    textAreaWrapper.style = "position:fixed; top:0; right:0;background:#eee;height:450px;width:400px;z-index:9999999999999999; opacity:0.95;";
-    textAreaWrapper.innerHTML = "<b>Site Clipboard</b><textarea></textarea>"
+
+    textAreaWrapper.classList.add('ssc-wrapper');
+    textAreaWrapper.classList.add('maximized');
+
+    // ssc = site specific clipboard
+    textAreaWrapper.innerHTML = "<b>Site Clipboard <span class='ssc-toggle-button'><span class='ssc-when-maximized'>Hide</span><span class='ssc-when-minimized'>Show</span></b><textarea></textarea>"
     body.appendChild(textAreaWrapper);
     let textArea = textAreaWrapper.querySelector("textarea");
-
-
-    textArea.style="width:100%;height:85%;";
 
 
     // set the content from the previous localStorage contents
@@ -48,4 +66,27 @@
         }
     }
     );
+
+    // minimize/maximize
+
+    let minimizeButton = textAreaWrapper.querySelector(".ssc-toggle-button");
+
+    minimizeButton.style = "cursor:pointer;"
+
+    minimizeButton.addEventListener('click', function() {
+        textAreaWrapper.classList.toggle('minimized');
+        textAreaWrapper.classList.toggle('maximized');
+    })
+
+    textAreaWrapper.addEventListener("mouseenter",function() {
+        textAreaWrapper.classList.add("ssc-focused");
+    }
+    );
+
+
+    textAreaWrapper.addEventListener("mouseleave",function() {
+        textAreaWrapper.classList.remove("ssc-focused");
+    }
+    );
+
 })();
