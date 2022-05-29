@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Site specific clipboard
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.1.1
 // @description  A simple userscript that gives you a textarea you can write on that will persist when you go back to that website
 // @author       albert@addteam.org
 // @match        http*://*/*
@@ -16,7 +16,7 @@
 
     let body = document.body;
     let textAreaWrapper = document.createElement("div");
-    textAreaWrapper.style = "position:fixed; top:0; right:0;background:#eee;height:450px;width:300px;z-index:9999999999999999;";
+    textAreaWrapper.style = "position:fixed; top:0; right:0;background:#eee;height:450px;width:400px;z-index:9999999999999999; opacity:0.95;";
     textAreaWrapper.innerHTML = "<b>Site Clipboard</b><textarea></textarea>"
     body.appendChild(textAreaWrapper);
     let textArea = textAreaWrapper.querySelector("textarea");
