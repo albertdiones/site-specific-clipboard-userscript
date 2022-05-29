@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Site specific clipboard
 // @namespace    http://tampermonkey.net/
-// @version      0.1.2
+// @version      0.1.3
 // @description  A simple userscript that gives you a textarea you can write on that will persist when you go back to that website
 // @author       albert@addteam.org
 // @match        http*://*/*
